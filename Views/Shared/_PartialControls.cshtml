@@ -1,0 +1,18 @@
+﻿@model int
+@{
+    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+<td>
+    @if (controllerName == "Employee")
+    {
+        @Html.ActionLink("Show", "Show" + controllerName as string, new { id = @Model }, new { @class = "btn btn-success" });
+    }
+
+    @if (Request.IsAuthenticated && User.IsInRole("Manager") || User.IsInRole("Admin"))
+    {
+        @*@Html.ActionLink("Edit", "Edit" + controllerName, new { id = @Model }, new { @class = "btn btn-primary", data_toggle = "modal", data_target = "#myModal" })*@
+        @Html.ActionLink("Edit", "Edit" + controllerName, new { id = @Model }, new { @class = "btn btn-primary"})
+        @Html.ActionLink("Delete", "Delete" + controllerName, new { id = @Model }, new { @class = "btn btn-danger", onclick = "Delete(" + @Model + ")" })
+    }
+</td>
+

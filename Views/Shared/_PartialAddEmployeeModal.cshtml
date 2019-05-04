@@ -1,0 +1,64 @@
+﻿@model EmployeeViewModel
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+
+            @{
+                var options = new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.InsertAfter,
+                    UpdateTargetId = "Tbody",
+                    OnSuccess = "AddSuccess"
+                };
+            }
+
+            @using (Ajax.BeginForm("AddEmployee", "Employee", options))
+            {
+                @Html.HiddenFor(e => e.Employee.Id)
+
+                <div class="modal-body">
+                    <div>
+                        @Html.LabelFor(e => e.Employee.Name)
+                        @Html.EditorFor(e => e.Employee.Name)
+                        @Html.ValidationMessageFor(e => e.Employee.Name)
+                    </div>
+                    <br />
+                    <div>
+                        @Html.LabelFor(e => e.Employee.Age)
+                        @Html.EditorFor(e => e.Employee.Age, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(e => e.Employee.Age)
+                    </div>
+                    <br />
+                    <div>
+                        <label>Male</label>
+                        @Html.RadioButtonFor(e => e.Employee.Gender, 0)
+                        <label>Female</label>
+                        @Html.RadioButtonFor(e => e.Employee.Gender, 1)
+                    </div>
+                    <br />
+                    @Html.DropDownListFor(e => e.Employee.FK_Department_id, new SelectList(Model.Departments, "Id", "Department_Name"),
+                                                                           "Select Department", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Employee.FK_Department_id)
+                    <br />
+
+                    <div>
+                        @Html.LabelFor(e => e.Employee.Email)
+                        @Html.EditorFor(e => e.Employee.Email)
+                        @Html.ValidationMessageFor(e => e.Employee.Email)
+                    </div>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Close" />
+                    <input type="submit" class="btn btn-primary" value="Save changes" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

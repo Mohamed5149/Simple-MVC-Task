@@ -1,0 +1,54 @@
+﻿@model EmployeeViewModel
+@{
+    ViewBag.Title = "Employee Index";
+}
+
+
+@if (Model.Employees == null || Model.Employees.Count == 0)
+{
+    <h3>No Employees Found</h3>
+}
+else
+{
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="Tbody">
+            @foreach (var emp in Model.Employees)
+            {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.Age</td>
+                <td>@emp.Department.Department_Name</td>
+                <td>@emp.Gender</td>
+                <td>@emp.Email</td>
+
+                @Html.Partial("_PartialControls", emp.Id)
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if ((Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Manager")))
+{
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Add New Employee
+    </button>
+}
+
+@{Html.RenderPartial("_PartialAddEmployeeModal", Model);}
+
+@section scripts{
+    @Scripts.Render("~/bundles/ConfirmDeletion")
+    @Scripts.Render("~/bundles/ModalHandler")
+}

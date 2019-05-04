@@ -1,0 +1,28 @@
+﻿@model Department
+@{
+    ViewBag.Title = ViewBag.type + " Department";
+}
+
+<h2>@ViewBag.type Department</h2>
+
+@{
+    var options = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.InsertAfter,
+        UpdateTargetId = "Tbody",
+        OnSuccess="Addsucess"
+    };
+}
+
+@using (Ajax.BeginForm("EditDepartment", "Department",options))
+{
+    <div>
+        @Html.LabelFor(e=>e.Department_Name)
+        @Html.EditorFor(e => e.Department_Name)
+        @Html.ValidationMessageFor(e => e.Department_Name)
+    </div>
+
+    <br />
+    <input type="submit" value="Save" class="btn btn-primary" />
+}

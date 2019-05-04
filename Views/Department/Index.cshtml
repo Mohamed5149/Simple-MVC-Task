@@ -1,0 +1,43 @@
+﻿@model EmployeeViewModel
+@{
+    ViewBag.Title = "Departments Index";
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="Tbody">
+        @foreach (var dept in Model.Departments)
+        {
+            <tr>
+                <td>
+                    @dept.Department_Name
+                </td>
+                <td>
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        @Html.Partial("_PartialControls", dept.Id)
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Add New Department
+    </button>
+}
+
+@Html.Partial("_PartialAddDepartmentModal", Model)
+
+@section scripts{
+    @Scripts.Render("~/bundles/ConfirmDeletion")
+    @Scripts.Render("~/bundles/ModalHandler")
+}

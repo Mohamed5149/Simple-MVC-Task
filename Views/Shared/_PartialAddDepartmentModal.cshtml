@@ -1,0 +1,41 @@
+﻿@model EmployeeViewModel
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+
+            @{
+                var options = new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.InsertAfter,
+                    UpdateTargetId = "Tbody",
+                    OnSuccess = "AddSuccess"
+                };
+            }
+
+            @using (Ajax.BeginForm("AddDepartment", "Department", options))
+            {
+                <div class="modal-body">
+                    <div>
+                        @Html.LabelFor(e=>e.Department.Department_Name)
+                        @Html.EditorFor(e => e.Department.Department_Name)
+                        @Html.ValidationMessageFor(e => e.Department.Department_Name)
+                    </div>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Close" />
+                    <input type="submit" class="btn btn-primary" value="Save changes" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+

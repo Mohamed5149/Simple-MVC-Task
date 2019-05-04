@@ -1,0 +1,13 @@
+﻿@model Department
+
+<tr>
+    <td>
+        @Model.Department_Name
+    </td>
+    <td>
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            @Html.Partial("_PartialControls", Model.Id)
+        }
+    </td>
+</tr>

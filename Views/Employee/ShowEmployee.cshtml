@@ -1,0 +1,16 @@
+﻿@model Employee
+@{
+    ViewBag.Title = "ShowEmployee";
+}
+
+@using (Html.BeginForm())
+{
+    <div>
+        <h3>Name: @Model.Name</h3>
+        <h3>Age: @Model.Age</h3>
+        <h3>Gender: @Model.Gender</h3>
+        <h3>Email: @Model.Email</h3>
+    </div>
+
+}
+@Html.ActionLink("Close", "Index", new { @class = "btn btn-primary" })

@@ -1,0 +1,54 @@
+﻿@model EmployeeViewModel
+@{
+    ViewBag.Title = "Edit Employee";
+}
+
+<h2>Edit Employee</h2>
+
+@{
+    var options = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.InsertAfter,
+        UpdateTargetId = "Tbody",
+        OnSuccess = "AddSuccess"
+    };
+}
+
+@using (Ajax.BeginForm("EditEmployee", "Employee", options))
+{
+
+    @Html.HiddenFor(e => e.Employee.Id)
+
+    <div>
+        @Html.LabelFor(e=>e.Employee.Name)
+        @Html.EditorFor(e => e.Employee.Name)
+        @Html.ValidationMessageFor(e => e.Employee.Name)
+    </div>
+    <br />
+    <div>
+        @Html.LabelFor(e => e.Employee.Age)
+        @Html.EditorFor(e => e.Employee.Age, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+        @Html.ValidationMessageFor(e => e.Employee.Age)
+    </div>
+    <br />
+    <div>
+        <label>Male</label>
+        @Html.RadioButtonFor(e => e.Employee.Gender, 0)
+        <label>Female</label>
+        @Html.RadioButtonFor(e => e.Employee.Gender, 1)
+    </div>
+    <br />
+    @Html.DropDownListFor(e => e.Employee.FK_Department_id, new SelectList(Model.Departments, "Id", "Department_Name"),
+                                                                            "Select Department", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Employee.FK_Department_id)
+    <br />
+
+    <div>
+        @Html.LabelFor(e => e.Employee.Email)
+        @Html.EditorFor(e => e.Employee.Email, new { @placeholder = "Email", @class = "form-control" })
+        @Html.ValidationMessageFor(e => e.Employee.Email)
+    </div>
+    <br />
+    <input type="submit" value="Save" class="btn btn-primary" />
+}
